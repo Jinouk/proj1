@@ -14,7 +14,7 @@ void display(void) {
 
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
-  gluLookAt ( 2, 3, 5, 0, 0, 0, 0, 1, 0);
+  gluLookAt ( 0, 0, -7, 0, 0, 0, 0, 1, 0);
   
   glPushMatrix();
     
