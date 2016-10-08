@@ -1,7 +1,5 @@
 //Shape.c
 #include "Shape.h"
-#include <math.h>
-#include "stdio.h"
 
 #define PI 3.14159265
 
@@ -158,64 +156,17 @@ void drawZero() {
     glColor3f(0,0,0);
     // Front circle
     glBegin(GL_TRIANGLE_STRIP);
-      float increment = 1;
       for(int i = 0; i <= 360; i++) {
-        
         double radian = i * PI / 180.0;
+        double radiusX = 1;
+        double radiusY = 2;
 
-        GLfloat innerX;
-        GLfloat innerY;
-        
-        GLfloat outerX;
-        GLfloat outerY;
-        if (0 <= i && i < 90) {
-          // Inner Circle
-          
-          increment += 0.01;
-           innerX = increment * cos(radian);
-           innerY = increment * sin(radian);
-          
-          // Outer Circle
-           outerX = (increment + 1.2) * cos(radian);
-           outerY = (increment + 1.2) * sin(radian);
-           printf("i: %d, increment1: %f\n", i, increment);
-        }
-        
-        else if (90 <= i && i < 180) {
-          // Inner Circle
-          increment -= 0.01;
-           innerX = increment * cos(radian);
-           innerY = increment * sin(radian);
-          
-          // Outer Circle
-           outerX = (increment + 1.2) * cos(radian);
-           outerY = (increment + 1.2) * sin(radian);
-           printf("i: %d, increment2: %f\n", i, increment);
-        }
-        
-        else if (180 <= i && i< 270) {
-          // Inner Circle
-          increment += 0.01;
-           innerX = increment * cos(radian);
-           innerY = increment * sin(radian);
-          
-          // Outer Circle
-           outerX = (increment + 1.2) * cos(radian);
-           outerY = (increment + 1.2) * sin(radian);
-           printf("i: %d, increment3: %f\n", i, increment);
-        }
-        
-        else {
-          // Inner Circle
-          increment -= 0.01;
-           innerX = increment * cos(radian);
-           innerY = increment * sin(radian);
-          
-          // Outer Circle
-           outerX = (increment + 1.2) * cos(radian);
-           outerY = (increment + 1.2) * sin(radian);
-           printf("i: %d, increment4: %f\n", i, increment);
-        }
+        GLfloat innerX = radiusX * cos(radian);
+        GLfloat innerY = radiusY * sin(radian);
+      
+        // Outer Circle
+        GLfloat outerX = (radiusX + 1.2) * cos(radian);
+        GLfloat outerY = (radiusY + 1.2) * sin(radian);
         
                 
         frontInnerCord[i][0] = innerX;
@@ -228,83 +179,41 @@ void drawZero() {
         glVertex3f(outerX, outerY, 0); 
       }
     glEnd();
-    /*
+    
     glColor3f(1,0,0);
     // Back circle
     glBegin(GL_TRIANGLE_STRIP);
-      increment = 1;
+      
       for(int i = 0; i <= 360; i++) {
-        
         double radian = i * PI / 180.0;
+        double radiusX = 1;
+        double radiusY = 2;
+
+        GLfloat innerX = radiusX * cos(radian);
+        GLfloat innerY = radiusY * sin(radian);
+      
+        // Outer Circle
+        GLfloat outerX = (radiusX + 1.2) * cos(radian);
+        GLfloat outerY = (radiusY + 1.2) * sin(radian);
         
-        GLfloat innerX;
-        GLfloat innerY;
-        
-        GLfloat outerX;
-        GLfloat outerY;
-        if (0 <= i < 90) {
-          // Inner Circle
-          
-          increment += 0.01;
-           innerX = 1 * cos(radian);
-           innerY = increment * sin(radian);
-          
-          // Outer Circle
-           outerX = (1 + 1.2) * cos(radian);
-           outerY = (increment + 1.2) * sin(radian);
-        }
-        
-        else if (90 <= i < 180) {
-          // Inner Circle
-          increment -= 0.01;
-           innerX = 1 * cos(radian);
-           innerY = increment * sin(radian);
-          
-          // Outer Circle
-           outerX = (1 + 1.2) * cos(radian);
-           outerY = (increment + 1.2) * sin(radian);
-        }
-        
-        else if (180 <= i < 270) {
-          // Inner Circle
-          //increment += 0.01;
-           innerX = 1 * cos(radian);
-           innerY = increment * sin(radian);
-          
-          // Outer Circle
-           outerX = (1 + 1.2) * cos(radian);
-           outerY = (increment + 1.2) * sin(radian);
-        }
-        
-        else {
-          // Inner Circle
-          //increment -= 0.01;
-           innerX = 1 * cos(radian);
-           innerY = increment * sin(radian);
-          
-          // Outer Circle
-           outerX = (1 + 1.2) * cos(radian);
-           outerY = (increment + 1.2) * sin(radian);
-        }
-        
+                
         backInnerCord[i][0] = innerX;
         backInnerCord[i][1] = innerY;
-       
+        
         backOuterCord[i][0] = outerX;
         backOuterCord[i][1] = outerY;
         
-        glVertex3f(innerX, innerY, 0.5); 
-        glVertex3f(outerX, outerY, 0.5); 
+        glVertex3f(innerX, innerY, -1); 
+        glVertex3f(outerX, outerY, -1); 
       }
     glEnd();
     
-  
     glColor3f(0,1,0);
     // Inner surface
     glBegin(GL_TRIANGLE_STRIP);
       for(int i = 0; i <= 360; i++) {
         glVertex3f(frontInnerCord[i][0], frontInnerCord[i][1], 0); 
-        glVertex3f(backInnerCord[i][0], backInnerCord[i][1], 0.5); 
+        glVertex3f(backInnerCord[i][0], backInnerCord[i][1], -1); 
       }
     glEnd();
     
@@ -313,10 +222,10 @@ void drawZero() {
     glBegin(GL_TRIANGLE_STRIP);
       for(int i = 0; i <= 360; i++) {
         glVertex3f(frontOuterCord[i][0], frontOuterCord[i][1], 0); 
-        glVertex3f(backOuterCord[i][0], backOuterCord[i][1], 0.5); 
+        glVertex3f(backOuterCord[i][0], backOuterCord[i][1], -1); 
       }
     glEnd();
-    */
+    
   glPopMatrix();
 }
 void drawOne(){}
