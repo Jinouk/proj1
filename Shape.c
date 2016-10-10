@@ -1,7 +1,7 @@
 //Shape.c
 #include "Shape.h"
 
-#define PI 3.14159265
+
 
 GLfloat n[6][3] = {  /* Normals for the 6 faces of a cube. */
   {-1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {1.0, 0.0, 0.0},
@@ -144,29 +144,33 @@ void drawNumber(int number) {
 }
 
 void drawZero() {
+  GLfloat frontInnerCord[361][2];
+  GLfloat frontOuterCord[361][2];
   
+  GLfloat backInnerCord[361][2];
+  GLfloat backOuterCord[361][2];
 
-  GLfloat frontInnerCord[360][2];
-  GLfloat frontOuterCord[360][2];
-  
-  GLfloat backInnerCord[360][2];
-  GLfloat backOuterCord[360][2];
+  GLfloat innerX, innerY, outerX, outerY;
+
+  double radiusX = 0.5;
+  double radiusY = 1;
+  double thickness = 0.5;
+  double radian;
   
   glPushMatrix();
     glColor3f(0,0,0);
     // Front circle
     glBegin(GL_TRIANGLE_STRIP);
-      for(int i = 0; i <= 360; i++) {
-        double radian = i * PI / 180.0;
-        double radiusX = 1;
-        double radiusY = 2;
 
-        GLfloat innerX = radiusX * cos(radian);
-        GLfloat innerY = radiusY * sin(radian);
+      for(int i = 0; i <= 360; i++) {
+        radian = i * PI / 180.0;
+
+        innerX = radiusX * cos(radian);
+        innerY = radiusY * sin(radian);
       
         // Outer Circle
-        GLfloat outerX = (radiusX + 1.2) * cos(radian);
-        GLfloat outerY = (radiusY + 1.2) * sin(radian);
+        outerX = (radiusX + 0.5) * cos(radian);
+        outerY = (radiusY + 0.5) * sin(radian);
         
                 
         frontInnerCord[i][0] = innerX;
@@ -175,8 +179,8 @@ void drawZero() {
         frontOuterCord[i][0] = outerX;
         frontOuterCord[i][1] = outerY;
         
-        glVertex3f(innerX, innerY, 0); 
-        glVertex3f(outerX, outerY, 0); 
+        glVertex3f(innerX, innerY, thickness/2.0); 
+        glVertex3f(outerX, outerY, thickness/2.0); 
       }
     glEnd();
     
@@ -185,16 +189,14 @@ void drawZero() {
     glBegin(GL_TRIANGLE_STRIP);
       
       for(int i = 0; i <= 360; i++) {
-        double radian = i * PI / 180.0;
-        double radiusX = 1;
-        double radiusY = 2;
+        radian = i * PI / 180.0;
 
-        GLfloat innerX = radiusX * cos(radian);
-        GLfloat innerY = radiusY * sin(radian);
+        innerX = radiusX * cos(radian);
+        innerY = radiusY * sin(radian);
       
         // Outer Circle
-        GLfloat outerX = (radiusX + 1.2) * cos(radian);
-        GLfloat outerY = (radiusY + 1.2) * sin(radian);
+        outerX = (radiusX + 0.5) * cos(radian);
+        outerY = (radiusY + 0.5) * sin(radian);
         
                 
         backInnerCord[i][0] = innerX;
@@ -203,8 +205,8 @@ void drawZero() {
         backOuterCord[i][0] = outerX;
         backOuterCord[i][1] = outerY;
         
-        glVertex3f(innerX, innerY, -1); 
-        glVertex3f(outerX, outerY, -1); 
+        glVertex3f(innerX, innerY, -thickness/2.0); 
+        glVertex3f(outerX, outerY, -thickness/2.0); 
       }
     glEnd();
     
@@ -212,8 +214,8 @@ void drawZero() {
     // Inner surface
     glBegin(GL_TRIANGLE_STRIP);
       for(int i = 0; i <= 360; i++) {
-        glVertex3f(frontInnerCord[i][0], frontInnerCord[i][1], 0); 
-        glVertex3f(backInnerCord[i][0], backInnerCord[i][1], -1); 
+        glVertex3f(frontInnerCord[i][0], frontInnerCord[i][1], thickness/2.0); 
+        glVertex3f(backInnerCord[i][0], backInnerCord[i][1], -thickness/2.0); 
       }
     glEnd();
     
@@ -221,14 +223,24 @@ void drawZero() {
     // Outer surface
     glBegin(GL_TRIANGLE_STRIP);
       for(int i = 0; i <= 360; i++) {
-        glVertex3f(frontOuterCord[i][0], frontOuterCord[i][1], 0); 
-        glVertex3f(backOuterCord[i][0], backOuterCord[i][1], -1); 
+        glVertex3f(frontOuterCord[i][0], frontOuterCord[i][1], thickness/2.0); 
+        glVertex3f(backOuterCord[i][0], backOuterCord[i][1], -thickness/2.0); 
       }
     glEnd();
-    
   glPopMatrix();
 }
-void drawOne(){}
+void drawOne(){
+  glPushMatrix();
+    glScalef(1.25, 0.5, 0.5);
+    drawBox(1,0,0);
+  glPopMatrix();
+
+  glPushMatrix();
+    glScalef(0.33, 2, 0.5);
+    glTranslatef(0, 1.25, 0);
+    drawBox(0, 1, 0);
+  glPopMatrix();
+}
 void drawTwo(){}
 void drawThree(){}
 void drawFour(){}
