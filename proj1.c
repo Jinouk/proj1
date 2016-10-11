@@ -25,7 +25,7 @@ void display(void) {
   
   glPushMatrix();
     glTranslatef(5, 0, 2); 
-    drawNumber(9);
+    drawNumber(6);
   glPopMatrix();
 
   glPushMatrix();
