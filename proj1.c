@@ -7,7 +7,7 @@ double theta = 0;
 // Polar Coordinate Angle (0 to PI)
 double phi = PI/2;
 // Camera Radius
-double cameraRadius = 20;
+double cameraRadius = 30;
 
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
@@ -25,7 +25,7 @@ void display(void) {
   
   glPushMatrix();
     glTranslatef(5, 0, 2); 
-    drawNumber(1);
+    drawNumber(2);
   glPopMatrix();
 
   glPushMatrix();
@@ -71,6 +71,12 @@ void changeSize(int w, int h) {
 void keyboard(unsigned char key, int x, int y){
 	
   switch (key){
+    case 'x':
+      cameraRadius -= 0.5;
+      break;
+    case 'z':
+      cameraRadius += 0.5;
+      break;
   	case 27:
   		exit(0);
       break;

@@ -3,11 +3,11 @@
 #ifndef SHAPE_H_INCLUDED
 #define SHAPE_H_INCLUDED
 
-  #ifdef __APPLE__
-    #include <GLUT/glut.h>
-  #else
-    #include <GL/glut.h>
-  #endif
+#ifdef __APPLE__
+  #include <GLUT/glut.h>
+#else
+  #include <GL/glut.h>
+#endif
 
 #include <math.h>
 #include "stdio.h"
