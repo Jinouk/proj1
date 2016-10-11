@@ -7,7 +7,7 @@ double theta = 0;
 // Polar Coordinate Angle (0 to PI)
 double phi = PI/2;
 // Camera Radius
-double cameraRadius = 30;
+double cameraRadius = 10;
 
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
@@ -25,7 +25,7 @@ void display(void) {
   
   glPushMatrix();
     glTranslatef(5, 0, 2); 
-    drawNumber(2);
+    drawNumber(9);
   glPopMatrix();
 
   glPushMatrix();
@@ -38,7 +38,7 @@ void display(void) {
 
 void init(void) {
   
-  glClearColor(1.0, 1.0, 1.0, 1.0);
+  //glClearColor(1.0, 1.0, 1.0, 1.0);
   glEnable(GL_DEPTH_TEST);
      
 }
@@ -95,10 +95,14 @@ void specialKey(int key, int x, int y) {
       theta += PI/16;
       break;
     case GLUT_KEY_UP:
-      phi += PI/16;
+      if(phi < PI) {
+        phi += PI/16;
+      }
       break;
     case GLUT_KEY_DOWN:
-      phi -= PI/16; 
+      if(phi > PI/16) {
+        phi -= PI/16;
+      } 
       break;
     }
 }
@@ -108,7 +112,7 @@ int main(int argc, char **argv) {
 
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
-  glutInitWindowSize(800, 600);
+  glutInitWindowSize(800, 800);
   glutCreateWindow("HW1");
   glutInitWindowPosition(50, 50);
   
