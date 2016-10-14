@@ -4,6 +4,7 @@
 #define SHAPE_H_INCLUDED
 
 #include "Number.h"
+#include "Alphabet.h"
 
 void drawCube(int color1, int color2, int color3);
 void drawNumber(int number);

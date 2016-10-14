@@ -25,7 +25,7 @@ void display(void) {
   
   glPushMatrix();
     glTranslatef(5, 0, 2); 
-    drawNumber(6);
+    drawI();
   glPopMatrix();
 
   glPushMatrix();
@@ -38,7 +38,7 @@ void display(void) {
 
 void init(void) {
   
-  //glClearColor(1.0, 1.0, 1.0, 1.0);
+  glClearColor(1.0, 1.0, 1.0, 1.0);
   glEnable(GL_DEPTH_TEST);
      
 }
@@ -108,7 +108,6 @@ void specialKey(int key, int x, int y) {
 }
 
 int main(int argc, char **argv) {
-
 
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
