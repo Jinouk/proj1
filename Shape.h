@@ -6,8 +6,9 @@
 #include "Number.h"
 #include "Alphabet.h"
 
-void drawCube(int color1, int color2, int color3);
+void drawCube(double color1, double color2, double color3, int num1, int num2, int poly1, char poly2, char letter1, char letter2);
 void drawNumber(int number);
-void drawCylinder(double radius, double height);
-void drawHexagon(double radius, double height);
+void drawLetter(char letter);
+void drawPolygon(char polygon);
+
 #endif 

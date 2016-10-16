@@ -2,10 +2,10 @@
 #include "Shape.h"
 
 void triangle3D();
+void drawCylinder(double radius, double height);
+void drawHexagon(double radius, double height);
 
-
-
-void drawCube(int color1, int color2, int color3){
+void drawCube(double color1, double color2, double color3, int num1, int num2, int poly1, char poly2, char letter1, char letter2){
   glPushMatrix();
     drawBox(color1, color2, color3);
   glPopMatrix();
@@ -54,6 +54,52 @@ void drawCube(int color1, int color2, int color3){
     glTranslatef(22, 0, 0);
     drawBox(1,1,0);
   glPopMatrix();
+
+  glPushMatrix();
+    glTranslatef(0, 0, 1);
+    glScalef(0.3, 0.3, 0.3);
+    drawNumber(num1);
+  glPopMatrix();
+
+  glPushMatrix();
+    glNormal3f(0, 0, -1);
+    glTranslatef(0, 0, -1);
+    glRotatef(180, 0, 1, 0);
+    glScalef(0.4, 0.4, 0.4);
+    drawLetter(letter1);
+  glPopMatrix();
+
+  glPushMatrix();
+    glNormal3f(1, 0, 0);
+    glTranslatef(1, 0, 0);
+    glRotatef(90, 0, 1, 0);
+    glScalef(0.7, 0.7, 0.7);
+    drawPolygon(poly1);
+  glPopMatrix();
+
+  glPushMatrix();
+    glNormal3f(-1, 0, 0);
+    glTranslatef(-1, 0, 0);
+    glRotatef(-90, 0, 1, 0);
+    glScalef(0.3, 0.3, 0.3);
+    drawNumber(num2);
+  glPopMatrix();
+
+  glPushMatrix();
+    glNormal3f(0, 1, 0);
+    glTranslatef(0, 1, 0);
+    glRotatef(-90, 1, 0, 0);
+    glScalef(0.4, 0.4, 0.4);
+    drawLetter(letter2);
+  glPopMatrix();
+
+  glPushMatrix();
+    glNormal3f(0, -1, 0);
+    glTranslatef(0, -1, 0);
+    glRotatef(-90, 1, 0, 0);
+    glScalef(0.7, 0.7, 0.7);
+    drawPolygon(poly2);
+  glPopMatrix();
 }
 
 void drawNumber(int number) {
@@ -88,6 +134,99 @@ void drawNumber(int number) {
     default:
       drawZero();
       break;   
+  }
+}
+
+void drawLetter(char letter) {
+  switch (letter){
+    case 'A':
+      drawA();
+      break;
+    case 'B':
+      drawB();
+      break; 
+    case 'C':
+      drawC();
+      break; 
+    case 'D':
+      drawD();
+      break; 
+    case 'E':
+      drawE();
+      break; 
+    case 'F':
+      drawF();
+      break; 
+    case 'G':
+      drawG();
+      break; 
+    case 'H':
+      drawH();
+      break; 
+    case 'I':
+      drawI();
+      break; 
+    case 'J':
+      drawJ();
+      break; 
+    case 'K':
+      drawK();
+      break; 
+    case 'L':
+      drawL();
+      break; 
+    case 'M':
+      drawM();
+      break; 
+    case 'N':
+      drawN();
+      break; 
+    case 'O':
+      drawO();
+      break; 
+    case 'P':
+      drawP();
+      break; 
+    case 'Q':
+      drawQ();
+      break; 
+    case 'R':
+      drawR();
+      break; 
+    case 'S':
+      drawS();
+      break; 
+    case 'T':
+      drawT();
+      break; 
+    case 'U':
+      drawU();
+      break;
+    case 'V':
+      drawV();
+      break; 
+    case 'W':
+      drawW();
+      break; 
+    case 'X':
+      drawX();
+      break;
+    case 'Y':
+      drawY();
+      break; 
+    case 'Z':
+      drawZ();
+      break;   
+  }
+}
+
+void drawPolygon(char polygon) {
+  switch(polygon) {
+    case 'h':
+      drawHexagon(1, 0.5);
+      break;
+    case 'c':
+      drawCylinder(1, 0.5);
   }
 }
 

@@ -3,7 +3,7 @@
 
 
 // Azimuthal Coordinate Angle (0 to 2PI)
-double theta = 0;
+double theta = 0;   
 // Polar Coordinate Angle (0 to PI)
 double phi = PI/2;
 // Camera Radius
@@ -21,18 +21,34 @@ void display(void) {
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
   gluLookAt(cameraRadius * sin(theta) * sin(phi), cameraRadius * cos(phi), cameraRadius * cos(theta) * sin(phi), 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f);
-  //gluLookAt(3,3,5, 0, 0, 0, 0, 1, 0); 
+  
   
   glPushMatrix();
-    glTranslatef(5, 0, 2); 
-    drawG();
+  drawCube(1,0,1, 3, 7, 'c', 'h', 'P', 'Z');
   glPopMatrix();
+  
+  
+  
+  /*int counter = 65;
+  for (int i = -13; i < 14; i++){
+    glPushMatrix();
+      glTranslatef(i*3, 0, 0);
+      drawLetter((char) counter); 
+    glPopMatrix();
+    counter++;
+  } */
+  
+  /*glColor3f(0,0,0);
+  glPushMatrix();
+    glTranslatef(-2, 0, 0);
+    drawPolygon('h');
+  glPopMatrix();
+  
+  glPushMatrix();
+    drawPolygon('c');
+  glPopMatrix();
+  */
 
-  glPushMatrix();
-    glTranslatef(-3, 0, 0);
-    drawCube(1,0,0);
-  glPopMatrix();
-  
   glutSwapBuffers();
 }
 
