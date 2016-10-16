@@ -7,61 +7,67 @@ void drawHexagon(double radius, double height);
 
 void drawCube(double color1, double color2, double color3, int num1, int num2, int poly1, char poly2, char letter1, char letter2){
   glPushMatrix();
-    drawBox(color1, color2, color3);
+    glColor3f(0.72, 0.6, 0.5);
+    drawBox();
   glPopMatrix();
   
   glPushMatrix();
-    glScalef(0.1,0.1, 1);
-    glTranslatef(11, 11, 0);
-    drawBox(1,1,0);
+    glColor3f(color1, color2, color3);
+    glPushMatrix();
+      glScalef(0.1,0.1, 1);
+      glTranslatef(11, 11, 0);
+      drawBox();
+      
+      glTranslatef(0,-22, 0);
+      drawBox();
+      
+      glTranslatef(-22,0,0) ;
+      drawBox();
+      
+      glTranslatef(0,22,0) ;
+      drawBox();
+    glPopMatrix();
     
-    glTranslatef(0,-22, 0);
-    drawBox(1,1,0);
+    glPushMatrix();
+      glScalef(1, 0.1, 0.1);
+      glTranslatef(0,11,11);
+      drawBox(); 
+      
+      glTranslatef(0, -22, 0);
+      drawBox(); 
+      
+      glTranslatef(0, 0, -22);
+      drawBox(); 
+      
+      glTranslatef(0, 22, 0);
+      drawBox();
+    glPopMatrix();
     
-    glTranslatef(-22,0,0) ;
-    drawBox(1,1,0);
-    
-    glTranslatef(0,22,0) ;
-    drawBox(1,1,0);
+    glPushMatrix();
+      glScalef(0.1, 1.2, 0.1);
+      glTranslatef(11, 0, 11);
+      drawBox();
+      
+      glTranslatef(-22, 0, 0);
+      drawBox();
+      
+      glTranslatef(0, 0, -22);
+      drawBox();
+      
+      glTranslatef(22, 0, 0);
+      drawBox();
+    glPopMatrix();
   glPopMatrix();
   
   glPushMatrix();
-    glScalef(1, 0.1, 0.1);
-    glTranslatef(0,11,11);
-    drawBox(1,1,0); 
-    
-    glTranslatef(0, -22, 0);
-    drawBox(1,1,0); 
-    
-    glTranslatef(0, 0, -22);
-    drawBox(1,1,0); 
-    
-    glTranslatef(0, 22, 0);
-    drawBox(1,1,0);
-  glPopMatrix();
-  
-  glPushMatrix();
-    glScalef(0.1, 1.2, 0.1);
-    glTranslatef(11, 0, 11);
-    drawBox(1,1,0);
-    
-    glTranslatef(-22, 0, 0);
-    drawBox(1,1,0);
-    
-    glTranslatef(0, 0, -22);
-    drawBox(1,1,0);
-    
-    glTranslatef(22, 0, 0);
-    drawBox(1,1,0);
-  glPopMatrix();
-
-  glPushMatrix();
+    glColor3f(1.0, 0.0, 0.0);
     glTranslatef(0, 0, 1);
     glScalef(0.3, 0.3, 0.3);
     drawNumber(num1);
   glPopMatrix();
 
   glPushMatrix();
+    glColor3f(0.0, 1.0, 0.0);
     glNormal3f(0, 0, -1);
     glTranslatef(0, 0, -1);
     glRotatef(180, 0, 1, 0);
@@ -70,14 +76,16 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
   glPopMatrix();
 
   glPushMatrix();
+    glColor3f(0.0, 0.0, 1.0);
     glNormal3f(1, 0, 0);
     glTranslatef(1, 0, 0);
     glRotatef(90, 0, 1, 0);
     glScalef(0.7, 0.7, 0.7);
-    drawPolygon(poly1);
+    drawPolygon(poly1, 1, 0.5);
   glPopMatrix();
 
   glPushMatrix();
+    glColor3f(1.0, 1.0, 0.0);
     glNormal3f(-1, 0, 0);
     glTranslatef(-1, 0, 0);
     glRotatef(-90, 0, 1, 0);
@@ -86,6 +94,7 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
   glPopMatrix();
 
   glPushMatrix();
+    glColor3f(1.0, 0.0, 1.0);
     glNormal3f(0, 1, 0);
     glTranslatef(0, 1, 0);
     glRotatef(-90, 1, 0, 0);
@@ -94,11 +103,12 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
   glPopMatrix();
 
   glPushMatrix();
+    glColor3f(0.6, 0.3, 0.4);
     glNormal3f(0, -1, 0);
     glTranslatef(0, -1, 0);
     glRotatef(-90, 1, 0, 0);
     glScalef(0.7, 0.7, 0.7);
-    drawPolygon(poly2);
+    drawPolygon(poly2, 1, 0.5);
   glPopMatrix();
 }
 
@@ -220,13 +230,13 @@ void drawLetter(char letter) {
   }
 }
 
-void drawPolygon(char polygon) {
+void drawPolygon(char polygon, double radius, double height) {
   switch(polygon) {
     case 'h':
-      drawHexagon(1, 0.5);
+      drawHexagon(radius, height);
       break;
     case 'c':
-      drawCylinder(1, 0.5);
+      drawCylinder(radius, height);
   }
 }
 

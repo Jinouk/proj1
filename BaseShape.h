@@ -13,6 +13,6 @@
 
 #define PI 3.14159265
 
-void drawBox(int color1, int color2, int color3);
+void drawBox();
 void drawRingPart(double radiusX, double radiusY, double width, double thickness,  int start, int end);
 #endif

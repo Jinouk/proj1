@@ -12,13 +12,13 @@ void drawOne(){
   glPushMatrix();
     glScalef(1, 0.25, 0.5);
     glTranslatef(0, -8, 0);
-    drawBox(0,0,0);
+    drawBox();
   glPopMatrix();
 
   glPushMatrix();
     glScalef(0.25, 1.5, 0.5);
     glTranslatef(0, -0.25, 0);
-    drawBox(0, 0, 0);
+    drawBox();
   glPopMatrix();
   
   glPushMatrix();
@@ -58,13 +58,13 @@ void drawTwo(){
     glRotatef(45, 0, 0, 1);
     glScalef(1.5, 0.25, 0.5);
     glTranslatef(-1, -5, 0);
-    drawBox(0,1,1);
+    drawBox();
   glPopMatrix();
   
   glPushMatrix();
     glScalef(1.4, 0.25, 0.5);
     glTranslatef(0, -12.25, 0);
-    drawBox(0,0,1);
+    drawBox();
   glPopMatrix();
 }
 void drawThree(){
@@ -86,19 +86,19 @@ void drawFour(){
   glPushMatrix();
     glScalef(0.5, 3.5, 0.5);
     glTranslatef(1, 0.25, 0);
-    drawBox(1,0,0);
+    drawBox();
   glPopMatrix();
   
   glPushMatrix();
     glScalef(2, 0.5, 0.5);
-    drawBox(0,1,0);
+    drawBox();
   glPopMatrix();
   
   glPushMatrix();
     glRotatef(65, 0, 0, 1);
     glScalef(2.25, 0.5, 0.5);
     glTranslatef(0.75, 2.75, 0);
-    drawBox(1,0,1); 
+    drawBox(); 
   glPopMatrix();
 }
 void drawFive(){
@@ -107,13 +107,13 @@ void drawFive(){
   glPushMatrix();
     glScalef(1.1, 0.25, 0.5);
     glTranslatef(0.11, 12, 0);
-    drawBox(1,0,0);
+    drawBox();
   glPopMatrix();
   
   glPushMatrix();
     glScalef(0.25, 1.0, 0.5);
     glTranslatef(-2.90, 2, 0);
-    drawBox(0, 1, 0);
+    drawBox();
   glPopMatrix();
   
   glPushMatrix();
@@ -140,7 +140,7 @@ void drawSeven(){
     
     glTranslatef(-0.25, 2, 0);
     glScalef(1.25, 0.25, 0.5);
-    drawBox(1, 0, 0);
+    drawBox();
   glPopMatrix();
 }
 void drawEight(){

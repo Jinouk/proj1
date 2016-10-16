@@ -1,6 +1,6 @@
 #include "BaseShape.h"
 
-void drawBox(int color1, int color2, int color3) {
+void drawBox() {
 
   GLfloat n[6][3] = {  /* Normals for the 6 faces of a cube. */
     {-1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {1.0, 0.0, 0.0},
@@ -9,6 +9,7 @@ void drawBox(int color1, int color2, int color3) {
     {0, 1, 2, 3}, {3, 2, 6, 7}, {7, 6, 5, 4},
     {4, 5, 1, 0}, {5, 6, 2, 1}, {7, 4, 0, 3} };
   GLfloat v[8][3];  /* Will be filled in with X,Y,Z vertexes. */
+  //float diffuse[]  = {color1, color2, color3, 1.0f};
 
   v[0][0] = v[1][0] = v[2][0] = v[3][0] = -1;
   v[4][0] = v[5][0] = v[6][0] = v[7][0] = 1;
@@ -21,19 +22,10 @@ void drawBox(int color1, int color2, int color3) {
   glPushMatrix();
   for (i = 0; i < 6; i++) {
     
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glColor3f(0.0, 0.0, 0.0);
-    /*glBegin(GL_QUADS);
-      glNormal3fv(&n[i][0]);
-      
-      glVertex3fv(&v[faces[i][0]][0]);
-      glVertex3fv(&v[faces[i][1]][0]);
-      glVertex3fv(&v[faces[i][2]][0]);
-      glVertex3fv(&v[faces[i][3]][0]);
-    glEnd();
-    */
+    
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    glColor3f(color1, color2, color3);
+    //glColor3f(color1, color2, color3);
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
     glBegin(GL_QUADS);
       glNormal3fv(&n[i][0]);
       glVertex3fv(&v[faces[i][0]][0]);
@@ -41,6 +33,7 @@ void drawBox(int color1, int color2, int color3) {
       glVertex3fv(&v[faces[i][2]][0]);
       glVertex3fv(&v[faces[i][3]][0]);
     glEnd();
+    
   }
   glPopMatrix();
 }
@@ -73,7 +66,6 @@ void drawRingPart(double radiusX, double radiusY, double width, double thickness
   double radian;
   
   glPushMatrix();
-    glColor3f(0,0,0);
     // Front circle
     glBegin(GL_TRIANGLE_STRIP);
 
@@ -105,7 +97,6 @@ void drawRingPart(double radiusX, double radiusY, double width, double thickness
     glEnd();
     
     degree = start;
-    glColor3f(1,0,0);
     // Back circle
     glBegin(GL_TRIANGLE_STRIP);
       
@@ -136,7 +127,6 @@ void drawRingPart(double radiusX, double radiusY, double width, double thickness
       }
     glEnd();
     
-    glColor3f(0,1,0);
     // Inner surface
     glBegin(GL_TRIANGLE_STRIP);
       for(int i = 0; i < vertexCount; i++) {
@@ -145,7 +135,6 @@ void drawRingPart(double radiusX, double radiusY, double width, double thickness
       }
     glEnd();
     
-    glColor3f(0,0,1);
     // Outer surface
     glBegin(GL_TRIANGLE_STRIP);
       for(int i = 0; i < vertexCount; i++) {
