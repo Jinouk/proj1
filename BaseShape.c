@@ -23,7 +23,7 @@ void drawBox(int color1, int color2, int color3) {
     
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_QUADS);
+    /*glBegin(GL_QUADS);
       glNormal3fv(&n[i][0]);
       
       glVertex3fv(&v[faces[i][0]][0]);
@@ -31,7 +31,7 @@ void drawBox(int color1, int color2, int color3) {
       glVertex3fv(&v[faces[i][2]][0]);
       glVertex3fv(&v[faces[i][3]][0]);
     glEnd();
-    
+    */
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glColor3f(color1, color2, color3);
     glBegin(GL_QUADS);

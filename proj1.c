@@ -9,6 +9,9 @@ double phi = PI/2;
 // Camera Radius
 double cameraRadius = 10;
 
+GLfloat light_diffuse[] = {1.0, 0.0, 0.0, 1.0};
+GLfloat light_position[] = {4.0, 4.0, 4.0, 0.0};
+
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
   
@@ -55,6 +58,13 @@ void display(void) {
 void init(void) {
   
   glClearColor(1.0, 1.0, 1.0, 1.0);
+
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_LIGHTING);
+
+  glShadeModel(GL_FLAT);
   glEnable(GL_DEPTH_TEST);
      
 }
