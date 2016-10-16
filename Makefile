@@ -11,4 +11,5 @@ proj1: proj1.o Shape.o Alphabet.o Number.o BaseShape.o
 
 clean: 
 	-rm *.o
+	-rm proj1
 

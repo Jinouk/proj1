@@ -1,7 +1,7 @@
 //Shape.c
 #include "Shape.h"
 
-void triangle3D();
+void drawTriangle();
 void drawCylinder(double radius, double height);
 void drawHexagon(double radius, double height);
 
@@ -68,7 +68,7 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
 
   glPushMatrix();
     glColor3f(0.0, 1.0, 0.0);
-    glNormal3f(0, 0, -1);
+    //glNormal3f(0, 0, -1);
     glTranslatef(0, 0, -1);
     glRotatef(180, 0, 1, 0);
     glScalef(0.4, 0.4, 0.4);
@@ -77,7 +77,7 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
 
   glPushMatrix();
     glColor3f(0.0, 0.0, 1.0);
-    glNormal3f(1, 0, 0);
+    //glNormal3f(1, 0, 0);
     glTranslatef(1, 0, 0);
     glRotatef(90, 0, 1, 0);
     glScalef(0.7, 0.7, 0.7);
@@ -86,7 +86,7 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
 
   glPushMatrix();
     glColor3f(1.0, 1.0, 0.0);
-    glNormal3f(-1, 0, 0);
+    //glNormal3f(-1, 0, 0);
     glTranslatef(-1, 0, 0);
     glRotatef(-90, 0, 1, 0);
     glScalef(0.3, 0.3, 0.3);
@@ -95,7 +95,7 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
 
   glPushMatrix();
     glColor3f(1.0, 0.0, 1.0);
-    glNormal3f(0, 1, 0);
+    //glNormal3f(0, 1, 0);
     glTranslatef(0, 1, 0);
     glRotatef(-90, 1, 0, 0);
     glScalef(0.4, 0.4, 0.4);
@@ -104,7 +104,7 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
 
   glPushMatrix();
     glColor3f(0.6, 0.3, 0.4);
-    glNormal3f(0, -1, 0);
+    //glNormal3f(0, -1, 0);
     glTranslatef(0, -1, 0);
     glRotatef(-90, 1, 0, 0);
     glScalef(0.7, 0.7, 0.7);
@@ -237,85 +237,139 @@ void drawPolygon(char polygon, double radius, double height) {
       break;
     case 'c':
       drawCylinder(radius, height);
+      break;
+    case 't':
+      drawTriangle(radius, height);
+      break;
   }
 }
 
+void drawTriangle(double radius, double height) {
+  glPushMatrix();
+    
+    GLfloat vertices[3][2];
+    int counter = 0;
+    
+    for(int i = 90; i <= 330; i += 120) {
+      double radian = i * PI / 180;
+      GLfloat x = radius * cos(radian);
+      GLfloat y = radius * sin(radian);
+      
+      vertices[counter][0] = x;
+      vertices[counter][1] = y;
+      counter++;
+    }
+    
+    
+    glBegin(GL_TRIANGLE_STRIP);
+    // Front Triangle
+      glColor3f(1,0,0);
+      glVertex3f(vertices[0][0],vertices[0][1], height/2.0);
+      glVertex3f(vertices[1][0],vertices[1][1], height/2.0);
+      glVertex3f(vertices[2][0],vertices[2][1], height/2.0);
+      
+      // Bottom
+      glColor3f(0,1,0);
+      glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);
+      glVertex3f(vertices[1][0],vertices[1][1], height/2.0);
+      glVertex3f(vertices[1][0],vertices[1][1], -height/2.0);
 
-
-void drawTriangle3D() {}
+      // Left
+      glColor3f(1,0,1);
+      glVertex3f(vertices[0][0],vertices[0][1], height/2.0);
+      glVertex3f(vertices[0][0],vertices[0][1], -height/2.0);
+      
+      // Right
+      glColor3f(1,1,0);
+      glVertex3f(vertices[2][0],vertices[2][1], height/2.0);
+      glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);
+      
+      // 
+      glColor3f(0,1,1);
+      glVertex3f(vertices[1][0],vertices[1][1], -height/2.0);
+      glVertex3f(vertices[0][0],vertices[0][1], -height/2.0);
+      glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);
+    glEnd();
+  glPopMatrix();
+}
 
 void drawHexagon(double radius, double height) {
-  GLfloat vertices[7][2];
+  
+  glPushMatrix();
+    GLfloat vertices[7][2];
 
-  for(int i = 0; i <= 360; i += 60) {
-    double radian = i * PI / 180;
+    for(int i = 0; i <= 360; i += 60) {
+      double radian = i * PI / 180;
 
-    GLfloat x = radius * cos(radian);
-    GLfloat y = radius * sin(radian);
+      GLfloat x = radius * cos(radian);
+      GLfloat y = radius * sin(radian);
 
-    vertices[i/60][0] = x;
-    vertices[i/60][1] = y;
-  }
+      vertices[i/60][0] = x;
+      vertices[i/60][1] = y;
+    }
 
-  for(int j = 0; j < 6; j++) {
+    for(int j = 0; j < 6; j++) {
+      glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(0, 0, height/2.0);
+        glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0);
+      glEnd();
+
+      glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(0, 0, -height/2.0);
+        glVertex3f(vertices[j][0],vertices[j][1], -height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], -height/2.0);
+      glEnd();
+    }
+
     glBegin(GL_TRIANGLE_STRIP);
-      glVertex3f(0, 0, height/2.0);
+    for(int j = 0; j <= 6; j++) {
       glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
-      glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0);
+      glVertex3f(vertices[j][0],vertices[j][1], -height/2.0); 
+    }
     glEnd();
-
-    glBegin(GL_TRIANGLE_STRIP);
-      glVertex3f(0, 0, -height/2.0);
-      glVertex3f(vertices[j][0],vertices[j][1], -height/2.0);
-      glVertex3f(vertices[j+1][0],vertices[j+1][1], -height/2.0);
-    glEnd();
-  }
-
-  glBegin(GL_TRIANGLE_STRIP);
-  for(int j = 0; j < 6; j++) {
-    glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
-    glVertex3f(vertices[j][0],vertices[j][1], -height/2.0); 
-  }
-  glEnd();
+  glPopMatrix();
 }
 
 void drawCylinder(double radius, double height) {
   
-  GLfloat vertices[361][2];
+  glPushMatrix();
+    GLfloat vertices[361][2];
 
-  glBegin(GL_TRIANGLE_STRIP);
-  for(int i = 0; i <= 360; i++) {
-    double radian = i * PI / 180;
-
-    GLfloat x = radius * cos(radian);
-    GLfloat y = radius * sin(radian);
-
-   vertices[i][0] = x;
-   vertices[i][1] = y;
-  }
-
-  // Front and Back
-  for(int j = 0; j < 360; j++) {
     glBegin(GL_TRIANGLE_STRIP);
-      glVertex3f(0, 0, height/2.0);
+    for(int i = 0; i <= 360; i++) {
+      double radian = i * PI / 180;
+
+      GLfloat x = radius * cos(radian);
+      GLfloat y = radius * sin(radian);
+
+     vertices[i][0] = x;
+     vertices[i][1] = y;
+    }
+
+    // Front and Back
+    for(int j = 0; j < 360; j++) {
+      glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(0, 0, height/2.0);
+        glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0);
+      glEnd();
+
+      glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(0, 0, -height/2.0);
+        glVertex3f(vertices[j][0],vertices[j][1], -height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], -height/2.0);
+      glEnd();
+    }
+
+    // Side
+    glBegin(GL_TRIANGLE_STRIP);
+    for(int j = 0; j < 360; j++) {
       glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
-      glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0);
+      glVertex3f(vertices[j][0],vertices[j][1], -height/2.0); 
+    }
     glEnd();
-
-    glBegin(GL_TRIANGLE_STRIP);
-      glVertex3f(0, 0, -height/2.0);
-      glVertex3f(vertices[j][0],vertices[j][1], -height/2.0);
-      glVertex3f(vertices[j+1][0],vertices[j+1][1], -height/2.0);
-    glEnd();
-  }
-
-  // Side
-  glBegin(GL_TRIANGLE_STRIP);
-  for(int j = 0; j < 360; j++) {
-    glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
-    glVertex3f(vertices[j][0],vertices[j][1], -height/2.0); 
-  }
-  glEnd();
+  glPopMatrix();
 }
 
 
