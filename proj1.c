@@ -3,7 +3,7 @@
 
 
 // Azimuthal Coordinate Angle (0 to 2PI)
-double theta = 5 * PI/16;   
+double theta = -2 * PI/16;   
 // Polar Coordinate Angle (0 to PI)
 double phi = 6 * PI/16;
 // Camera Radius
