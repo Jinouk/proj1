@@ -264,28 +264,54 @@ void drawTriangle(double radius, double height) {
     glBegin(GL_TRIANGLE_STRIP);
     // Front Triangle
       glColor3f(1,0,0);
+      glNormal3f(0,0,1);
+      float diffuse0[]  = {1, 0, 0, 1};
+      float s[] = {128};
+      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse0);
+      glMaterialfv(GL_FRONT, GL_SHININESS, s);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse0);
       glVertex3f(vertices[0][0],vertices[0][1], height/2.0);
       glVertex3f(vertices[1][0],vertices[1][1], height/2.0);
       glVertex3f(vertices[2][0],vertices[2][1], height/2.0);
       
       // Bottom
-      glColor3f(0,1,0);
+      //glColor3f(0,1,0);
+      float diffuse1[]  = {0, 1, 0, 1};
+      glNormal3f(0,-1,0);
+      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse1);
+      //glMaterialfv(GL_FRONT, GL_AMBIENT, diffuse1);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse1);
       glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);
       glVertex3f(vertices[1][0],vertices[1][1], height/2.0);
       glVertex3f(vertices[1][0],vertices[1][1], -height/2.0);
 
       // Left
-      glColor3f(1,0,1);
+      //glColor3f(1,0,1);
+      float diffuse2[]  = {1, 0, 1, 1};
+      glNormal3f(-1, -1, 0);
+      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse2);
+      //glMaterialfv(GL_FRONT, GL_AMBIENT, diffuse2);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse2);
       glVertex3f(vertices[0][0],vertices[0][1], height/2.0);
       glVertex3f(vertices[0][0],vertices[0][1], -height/2.0);
       
       // Right
-      glColor3f(1,1,0);
+      //glColor3f(1,1,0);
+      float diffuse3[]  = {1, 1, 0, 1};
+      glNormal3f(1, 1, 0);
+      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse3);
+      //glMaterialfv(GL_FRONT, GL_AMBIENT, diffuse3);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse3);
       glVertex3f(vertices[2][0],vertices[2][1], height/2.0);
       glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);
       
       // 
-      glColor3f(0,1,1);
+      //glColor3f(0,1,1);
+      glNormal3f(0,0,-1);
+      float diffuse4[]  = {0, 1, 1, 1};
+      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse4);
+      //glMaterialfv(GL_FRONT, GL_AMBIENT, diffuse4);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse4);
       glVertex3f(vertices[1][0],vertices[1][1], -height/2.0);
       glVertex3f(vertices[0][0],vertices[0][1], -height/2.0);
       glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);

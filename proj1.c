@@ -9,8 +9,8 @@ double phi = 6 * PI/16;
 // Camera Radius
 double cameraRadius = 25;
 
-//GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
-//GLfloat light_position[] = {2.0, 2.0, -2.0, 0.0};
+GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+GLfloat light_position[] = {0.0, 0.0, 2.0, 0.0};
 
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
@@ -24,7 +24,7 @@ void display(void) {
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
   gluLookAt(cameraRadius * sin(theta) * sin(phi), cameraRadius * cos(phi), cameraRadius * cos(theta) * sin(phi), 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f);
-  
+  /*
   // Orange
   glPushMatrix();
     glRotatef(-40, 0, 1, 0);
@@ -113,6 +113,15 @@ void display(void) {
     glScalef(3,3,3);
     drawPolygon('t', 3, 1);
   glPopMatrix();
+  */
+
+  glPushMatrix();
+    //glTranslatef(-15 ,2,-5);
+    //glRotatef(90, 0, 1, 0);
+    glScalef(3,3,3);
+    drawPolygon('t', 3, 1);
+  glPopMatrix();
+
   
   glutSwapBuffers();
 }
@@ -121,10 +130,10 @@ void init(void) {
   
   glClearColor(1.0, 1.0, 1.0, 1.0);
 
- // glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
- // glLightfv(GL_LIGHT0, GL_POSITION, light_position);
- // glEnable(GL_LIGHT0);
- // glEnable(GL_LIGHTING);
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_LIGHTING);
 
   glShadeModel(GL_FLAT);
   glEnable(GL_DEPTH_TEST);
@@ -172,9 +181,6 @@ void keyboard(unsigned char key, int x, int y){
 }
 
 void specialKey(int key, int x, int y) {
-
-  //float fraction = 0.1f;
-
   switch (key){
     case GLUT_KEY_LEFT:
       theta -= PI/ 16;
@@ -203,14 +209,14 @@ int main(int argc, char **argv) {
   glutCreateWindow("HW1");
   glutInitWindowPosition(50, 50);
   
-  
+  init();
   glutDisplayFunc(display);
   //glutReshapeFunc(changeSize);
   glutIdleFunc(display);
   glutKeyboardFunc(keyboard);
   glutSpecialUpFunc(specialKey);
 
-  init();
+  
 	glutMainLoop();
   
   return 0;
