@@ -9,8 +9,7 @@ double phi = 6 * PI/16;
 // Camera Radius
 double cameraRadius = 25;
 
-GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
-GLfloat light_position[] = {0.0, 0.0, 2.0, 0.0};
+
 
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
@@ -21,8 +20,18 @@ void display(void) {
   int h = glutGet( GLUT_WINDOW_HEIGHT );
   gluPerspective( 60, w / h, 0.1, 100 );
 
+  GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat light_position[] = {2.0, 2.0, 0.0, 0.0};
+
+
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
+  
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_LIGHTING);
+  
   gluLookAt(cameraRadius * sin(theta) * sin(phi), cameraRadius * cos(phi), cameraRadius * cos(theta) * sin(phi), 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f);
   /*
   // Orange
@@ -130,10 +139,7 @@ void init(void) {
   
   glClearColor(1.0, 1.0, 1.0, 1.0);
 
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-  glEnable(GL_LIGHT0);
-  glEnable(GL_LIGHTING);
+  
 
   glShadeModel(GL_FLAT);
   glEnable(GL_DEPTH_TEST);
