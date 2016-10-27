@@ -15,4 +15,5 @@
 
 void drawBox();
 void drawRingPart(double radiusX, double radiusY, double width, double thickness,  int start, int end);
+
 #endif

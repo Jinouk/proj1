@@ -5,14 +5,27 @@ void drawTriangle();
 void drawCylinder(double radius, double height);
 void drawHexagon(double radius, double height);
 
+
 void drawCube(double color1, double color2, double color3, int num1, int num2, int poly1, char poly2, char letter1, char letter2){
+  
+  GLfloat boxColor[] = {0.72, 0.6, 0.5, 1.0};
+  GLfloat eavesColor[] = {color1, color2, color3, 0.0};
+  GLfloat sideDiffuse1[] = {1.0, 0.0, 0.0};
+  GLfloat sideDiffuse2[] = {0.0, 1.0, 0.0};
+  GLfloat sideDiffuse3[] = {0.0, 0.0, 1.0};
+  GLfloat sideDiffuse4[] = {1.0, 1.0, 0.0};
+  GLfloat sideDiffuse5[] = {1.0, 0.0, 1.0};
+  GLfloat sideDiffuse6[] = {0.6, 0.3, 0.4};
+
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, boxColor);
+
   glPushMatrix();
-    glColor3f(0.72, 0.6, 0.5);
     drawBox();
   glPopMatrix();
   
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, eavesColor);
   glPushMatrix();
-    glColor3f(color1, color2, color3);
+    //glColor3f(color1, color2, color3);
     glPushMatrix();
       glScalef(0.1,0.1, 1);
       glTranslatef(11, 11, 0);
@@ -58,53 +71,48 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
       drawBox();
     glPopMatrix();
   glPopMatrix();
-  
+
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, sideDiffuse1);
   glPushMatrix();
-    glColor3f(1.0, 0.0, 0.0);
     glTranslatef(0, 0, 1);
     glScalef(0.3, 0.3, 0.3);
     drawNumber(num1);
   glPopMatrix();
 
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, sideDiffuse2);
   glPushMatrix();
-    glColor3f(0.0, 1.0, 0.0);
-    //glNormal3f(0, 0, -1);
     glTranslatef(0, 0, -1);
     glRotatef(180, 0, 1, 0);
     glScalef(0.4, 0.4, 0.4);
     drawLetter(letter1);
   glPopMatrix();
 
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, sideDiffuse3);
   glPushMatrix();
-    glColor3f(0.0, 0.0, 1.0);
-    //glNormal3f(1, 0, 0);
     glTranslatef(1, 0, 0);
     glRotatef(90, 0, 1, 0);
     glScalef(0.7, 0.7, 0.7);
     drawPolygon(poly1, 1, 0.5);
   glPopMatrix();
 
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, sideDiffuse4);
   glPushMatrix();
-    glColor3f(1.0, 1.0, 0.0);
-    //glNormal3f(-1, 0, 0);
     glTranslatef(-1, 0, 0);
     glRotatef(-90, 0, 1, 0);
     glScalef(0.3, 0.3, 0.3);
     drawNumber(num2);
   glPopMatrix();
 
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, sideDiffuse5);
   glPushMatrix();
-    glColor3f(1.0, 0.0, 1.0);
-    //glNormal3f(0, 1, 0);
     glTranslatef(0, 1, 0);
     glRotatef(-90, 1, 0, 0);
     glScalef(0.4, 0.4, 0.4);
     drawLetter(letter2);
   glPopMatrix();
 
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, sideDiffuse6);
   glPushMatrix();
-    glColor3f(0.6, 0.3, 0.4);
-    //glNormal3f(0, -1, 0);
     glTranslatef(0, -1, 0);
     glRotatef(-90, 1, 0, 0);
     glScalef(0.7, 0.7, 0.7);
@@ -260,61 +268,91 @@ void drawTriangle(double radius, double height) {
       counter++;
     }
     
-    
-    glBegin(GL_TRIANGLE_STRIP);
-    // Front Triangle
-      glColor3f(1,0,0);
-      glNormal3f(0,0,1);
-      float diffuse0[]  = {1, 0, 0, 1};
-      float s[] = {128};
-      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse0);
-      glMaterialfv(GL_FRONT, GL_SHININESS, s);
-      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse0);
-      glVertex3f(vertices[0][0],vertices[0][1], height/2.0);
-      glVertex3f(vertices[1][0],vertices[1][1], height/2.0);
-      glVertex3f(vertices[2][0],vertices[2][1], height/2.0);
-      
-      // Bottom
-      //glColor3f(0,1,0);
-      float diffuse1[]  = {0, 1, 0, 1};
-      glNormal3f(0,-1,0);
-      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse1);
-      //glMaterialfv(GL_FRONT, GL_AMBIENT, diffuse1);
-      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse1);
-      glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);
-      glVertex3f(vertices[1][0],vertices[1][1], height/2.0);
-      glVertex3f(vertices[1][0],vertices[1][1], -height/2.0);
+    GLfloat normal[3];
+    GLfloat p1[3], p2[3], p3[3];
 
-      // Left
-      //glColor3f(1,0,1);
-      float diffuse2[]  = {1, 0, 1, 1};
-      glNormal3f(-1, -1, 0);
-      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse2);
-      //glMaterialfv(GL_FRONT, GL_AMBIENT, diffuse2);
-      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse2);
-      glVertex3f(vertices[0][0],vertices[0][1], height/2.0);
-      glVertex3f(vertices[0][0],vertices[0][1], -height/2.0);
-      
-      // Right
-      //glColor3f(1,1,0);
-      float diffuse3[]  = {1, 1, 0, 1};
-      glNormal3f(1, 1, 0);
-      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse3);
-      //glMaterialfv(GL_FRONT, GL_AMBIENT, diffuse3);
-      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse3);
-      glVertex3f(vertices[2][0],vertices[2][1], height/2.0);
-      glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);
-      
-      // 
-      //glColor3f(0,1,1);
-      glNormal3f(0,0,-1);
-      float diffuse4[]  = {0, 1, 1, 1};
-      glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, diffuse4);
-      //glMaterialfv(GL_FRONT, GL_AMBIENT, diffuse4);
-      glMaterialfv(GL_FRONT, GL_SPECULAR, diffuse4);
-      glVertex3f(vertices[1][0],vertices[1][1], -height/2.0);
-      glVertex3f(vertices[0][0],vertices[0][1], -height/2.0);
-      glVertex3f(vertices[2][0],vertices[2][1], -height/2.0);
+    // Front Triangle
+    glBegin(GL_TRIANGLE_STRIP);
+      p1[0] = vertices[0][0]; p1[1] = vertices[0][1]; p1[2] = height/2.0;
+      p2[0] = vertices[1][0]; p2[1] = vertices[1][1]; p2[2] = height/2.0;
+      p3[0] = vertices[2][0]; p3[1] = vertices[2][1]; p3[2] = height/2.0;
+
+      glNormal3f(0,  0, 1);
+      glVertex3fv(p1);
+      glVertex3fv(p2);
+      glVertex3fv(p3);
+    glEnd();
+    
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, ambient_and_diffuse2);
+    // Back Triangle
+    glBegin(GL_TRIANGLE_STRIP);
+      p1[2] = -height/2.0;
+      p2[2] = -height/2.0;
+      p3[2] = -height/2.0;
+
+      glNormal3f(0,  0, -1);
+      glVertex3fv(p1);
+      glVertex3fv(p2);
+      glVertex3fv(p3);
+    glEnd();
+
+    // Right side
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, ambient_and_diffuse3);
+    glNormal3f(cos(45 * PI / 180),  sin(45 * PI / 180), 0);
+    glBegin(GL_TRIANGLE_STRIP);
+      p2[0] = vertices[2][0]; p2[1] = vertices[2][1]; p2[2] = height/2.0;
+
+      glNormal3f(cos(45 * PI / 180),  sin(45 * PI / 180), 0);
+      glVertex3fv(p3);
+      glVertex3fv(p1);
+      glVertex3fv(p2);
+
+      p3[0] = vertices[0][0]; p3[1] = vertices[0][1]; p3[2] = height/2.0;
+      glVertex3fv(p3);
+    glEnd();
+
+    // Bottom
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, ambient_and_diffuse4);
+    glNormal3f(0, -1, 0);
+    glBegin(GL_TRIANGLE_STRIP);
+      p1[0] = vertices[2][0]; p1[1] = vertices[2][1]; p1[2] = height/2.0;
+      p2[0] = vertices[1][0]; p2[1] = vertices[1][1]; p2[2] = height/2.0;
+      p3[0] = vertices[1][0]; p3[1] = vertices[1][1]; p3[2] = -height/2.0;
+      glVertex3fv(p1);
+      glVertex3fv(p2);
+      glVertex3fv(p3);
+    glEnd();
+
+    glBegin(GL_TRIANGLE_STRIP);
+      p1[0] = vertices[1][0]; p1[1] = vertices[1][1]; p1[2] = -height/2.0;
+      p2[0] = vertices[2][0]; p2[1] = vertices[2][1]; p2[2] = -height/2.0;
+      p3[0] = vertices[2][0]; p3[1] = vertices[2][1]; p3[2] = height/2.0;      
+      glVertex3fv(p1);
+      glVertex3fv(p2);
+      glVertex3fv(p3);
+    glEnd();
+
+    // Left
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, ambient_and_diffuse5);
+    glNormal3f(cos(135 * PI / 180),  sin(135 * PI / 180), 0);
+    glBegin(GL_TRIANGLE_STRIP);
+      p1[0] = vertices[0][0]; p1[1] = vertices[0][1]; p1[2] = -height/2.0;
+      p2[0] = vertices[0][0]; p2[1] = vertices[0][1]; p2[2] = height/2.0;
+      p3[0] = vertices[1][0]; p3[1] = vertices[1][1]; p3[2] = -height/2.0;
+
+      glVertex3fv(p1);
+      glVertex3fv(p2);
+      glVertex3fv(p3);
+    glEnd();
+
+    glBegin(GL_TRIANGLE_STRIP);
+      p1[0] = vertices[0][0]; p1[1] = vertices[0][1]; p1[2] = height/2.0;
+      p2[0] = vertices[1][0]; p2[1] = vertices[1][1]; p2[2] = -height/2.0;
+      p3[0] = vertices[1][0]; p3[1] = vertices[1][1]; p3[2] = height/2.0;
+
+      glVertex3fv(p1);
+      glVertex3fv(p2);
+      glVertex3fv(p3);
     glEnd();
   glPopMatrix();
 }
@@ -336,66 +374,91 @@ void drawHexagon(double radius, double height) {
 
     for(int j = 0; j < 6; j++) {
       glBegin(GL_TRIANGLE_STRIP);
+        glNormal3f(0,0,1);
         glVertex3f(0, 0, height/2.0);
         glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
         glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0);
       glEnd();
 
       glBegin(GL_TRIANGLE_STRIP);
+        glNormal3f(0,0,-1);
         glVertex3f(0, 0, -height/2.0);
         glVertex3f(vertices[j][0],vertices[j][1], -height/2.0);
         glVertex3f(vertices[j+1][0],vertices[j+1][1], -height/2.0);
       glEnd();
     }
 
-    glBegin(GL_TRIANGLE_STRIP);
-    for(int j = 0; j <= 6; j++) {
-      glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
-      glVertex3f(vertices[j][0],vertices[j][1], -height/2.0); 
+    for(int j = 0; j < 6; j++) {
+      GLfloat radian = j * 60 * PI / 180;
+
+      glNormal3f(cos(radian), sin(radian), 0);
+      glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0);
+        glVertex3f(vertices[j][0],vertices[j][1], -height/2.0); 
+      glEnd();
+
+      glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(vertices[j][0],vertices[j][1], -height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], -height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0); 
+      glEnd();
     }
-    glEnd();
   glPopMatrix();
 }
 
 void drawCylinder(double radius, double height) {
   
+  GLfloat ambient_and_diffuse[] = {1.0, 0.0, 0.0, 1.0};
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, ambient_and_diffuse);
+
   glPushMatrix();
     GLfloat vertices[361][2];
 
     glBegin(GL_TRIANGLE_STRIP);
     for(int i = 0; i <= 360; i++) {
       double radian = i * PI / 180;
-
       GLfloat x = radius * cos(radian);
       GLfloat y = radius * sin(radian);
 
      vertices[i][0] = x;
      vertices[i][1] = y;
     }
-
+    
     // Front and Back
     for(int j = 0; j < 360; j++) {
+      glNormal3f(0,0,1);
       glBegin(GL_TRIANGLE_STRIP);
         glVertex3f(0, 0, height/2.0);
-        glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
-        glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0);
+        glVertex3f(vertices[j][0], vertices[j][1], height/2.0);
+        glVertex3f(vertices[j+1][0], vertices[j+1][1], height/2.0);
       glEnd();
 
+      glNormal3f(0,0,-1);
       glBegin(GL_TRIANGLE_STRIP);
         glVertex3f(0, 0, -height/2.0);
         glVertex3f(vertices[j][0],vertices[j][1], -height/2.0);
         glVertex3f(vertices[j+1][0],vertices[j+1][1], -height/2.0);
       glEnd();
-    }
 
-    // Side
-    glBegin(GL_TRIANGLE_STRIP);
-    for(int j = 0; j < 360; j++) {
-      glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
-      glVertex3f(vertices[j][0],vertices[j][1], -height/2.0); 
-    }
-    glEnd();
+      GLfloat radian = j * PI / 180;
+
+      glNormal3f(cos(radian), sin(radian), 0);
+      glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(vertices[j][0],vertices[j][1], height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0);
+        glVertex3f(vertices[j][0],vertices[j][1], -height/2.0); 
+      glEnd();
+
+      glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(vertices[j][0],vertices[j][1], -height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], -height/2.0);
+        glVertex3f(vertices[j+1][0],vertices[j+1][1], height/2.0); 
+      glEnd();     
+    }  
   glPopMatrix();
 }
+
+
 
 
