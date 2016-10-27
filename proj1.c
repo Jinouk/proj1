@@ -11,8 +11,15 @@ GLfloat cameraRadius = 25;
 
 GLfloat light_position[3];
 GLfloat lightAngle = 18 * PI/36;
-GLfloat lightHeight = 15;
+GLfloat lightHeight = 10;
 
+GLfloat rightRotateSlow = 0;
+GLfloat leftRotateSlow = 0;
+GLfloat rightRotatefast = 0;
+GLfloat leftRotateFast = 0;
+
+GLfloat fastRotate = 3;
+GLfloat slowRotate = 1;
 
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
@@ -45,19 +52,18 @@ void display(void) {
   glEnable(GL_LIGHT0);
   glEnable(GL_LIGHTING);
   
-  
   // Yellow
   glPushMatrix();
     glRotatef(-40, 0, 1, 0);
-    glRotatef(-90, 0, 0, 1);
+    glRotatef(90, 0, 0, 1);
+    glRotatef(leftRotateSlow, 0, 1, 0);
     drawCube(0.8, 0.5, 0, 3, 7, 't', 'h', 'P', 'Z');
   glPopMatrix();
-  
   
   // Dark Green
   glPushMatrix();
     glTranslatef(4, 0, -5);
-    glRotatef(45, 0, 1, 0);
+    glRotatef(rightRotatefast, 0, 1, 0);
     drawCube(0, 0.5, 0, 2, 0, 'c', 'h', 'K', 'D');
   glPopMatrix();
   
@@ -65,20 +71,22 @@ void display(void) {
   glPushMatrix();
     glTranslatef(3, 0, 3);
     glRotatef(90, 0, 0, 1);
+    glRotatef(leftRotateFast, 0, 1, 0);
     drawCube(0.5, 0.8, 0.2, 6, 1, 'h', 't', 'G', 'S');
   glPopMatrix();
   
   // Purple
   glPushMatrix();
     glTranslatef(-4, 0, 4);
-    glRotatef(60, 0, 1, 0);
     glRotatef(-90, 1, 0, 0);
+    glRotatef(rightRotateSlow, 0, 1, 0);
     drawCube(0.7, 0.2, 0.5, 5, 9, 'h', 'c', 'U', 'Y');
   glPopMatrix();
   
   // Red
   glPushMatrix();
     glTranslatef(-6, 6.3, -7);
+    glRotatef(rightRotateSlow, 0, 1, 0);
     drawCube(1, 0, 0, 1, 4, 't', 'c', 'W', 'X');
   glPopMatrix();
   
@@ -125,7 +133,7 @@ void display(void) {
   glPopMatrix();
   
   // Floor 
-  GLfloat floorColor[] = {0.75, 0.5, 1, 1};
+  GLfloat floorColor[] = {0.1, 0.9, 0.5, 1};
   glPushMatrix();
     glMaterialfv(GL_FRONT, GL_DIFFUSE, floorColor);
     glTranslatef(0, -2, 0);
@@ -149,6 +157,26 @@ void display(void) {
     drawBox();
   glPopMatrix();
   glutSwapBuffers();
+
+  if(rightRotateSlow == 360) 
+    rightRotateSlow = 0;
+
+  if(leftRotateSlow == 0)
+    leftRotateSlow = 360;
+
+  if(rightRotatefast == 360)
+    rightRotatefast = 0;
+
+  if(leftRotateFast == 0)
+    leftRotateFast = 360;
+  
+  rightRotateSlow += slowRotate;
+  leftRotateSlow -= slowRotate;
+
+  rightRotatefast += fastRotate;
+  leftRotateFast -= fastRotate;
+
+  glutPostRedisplay();
 }
 
 void init(void) {
@@ -201,6 +229,7 @@ void keyboard(unsigned char key, int x, int y){
   		exit(0);
       break;
 	}
+  glutPostRedisplay();
 }
 
 void specialKey(int key, int x, int y) {
@@ -222,6 +251,7 @@ void specialKey(int key, int x, int y) {
       }
       break;
     }
+    glutPostRedisplay();
 }
 
 int main(int argc, char **argv) {

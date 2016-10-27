@@ -24,25 +24,42 @@ void drawOne(){
   glPushMatrix();
     glScalef(1.25, 1.25, 1);
     glTranslatef(0.25, 0.75, 0.5);
-    glBegin(GL_TRIANGLE_STRIP);
-      
-      // Front Triangle
+
+    glNormal3f(0,0,1);
+    // Front Triangle
+    glBegin(GL_TRIANGLE_STRIP);   
       glVertex3f(0,0,0);
       glVertex3f(0,1,0);
       glVertex3f(-1, 0, 0);
-
-      // Top
+    glEnd();
+    // Top
+    glNormal3f(-1,1,0);
+    glBegin(GL_TRIANGLE_STRIP);
+      glVertex3f(0,1,0);
+      glVertex3f(-1, 0, 0);
       glVertex3f(-1, 0, -1);
       glVertex3f(0, 1, -1);
-
-      // Back Trianlge
+    glEnd();
+    // Back Trianlge
+    glNormal3f(0,0,-1);
+    glBegin(GL_TRIANGLE_STRIP);
+      glVertex3f(-1, 0, -1);
+      glVertex3f(0, 1, -1);
       glVertex3f(0, 0, -1);
-
-      // Side
+    glEnd();
+    // Side
+    glNormal3f(1,0,0);
+    glBegin(GL_TRIANGLE_STRIP);
+      glVertex3f(-1, 0, -1);
+      glVertex3f(0, 0, -1);
       glVertex3f(0, 1, 0);
       glVertex3f(0, 0, 0);
-
-      // Bottom
+    glEnd();
+    // Bottom
+    glNormal3f(0,0,0);
+    glBegin(GL_TRIANGLE_STRIP);
+      glVertex3f(0, 1, 0);
+      glVertex3f(0, 0, 0);
       glVertex3f(-1, 0, -1);
       glVertex3f(-1, 0, 0);
     glEnd();
