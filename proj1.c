@@ -38,8 +38,8 @@ GLfloat texWidth = 256;
 GLfloat texHeight = 256;
 GLuint texid = 0;
 
-GLfloat angle = -150;   /* in degrees */
-GLfloat angle2 = 30;
+GLfloat angle = 0;   /* in degrees */
+GLfloat angle2 = 0;
 
 int moving, startx, starty;
 
