@@ -32,14 +32,7 @@ void drawOne(){
       glVertex3f(0,1,0);
       glVertex3f(-1, 0, 0);
     glEnd();
-    // Top
-    glNormal3f(-1,1,0);
-    glBegin(GL_TRIANGLE_STRIP);
-      glVertex3f(0,1,0);
-      glVertex3f(-1, 0, 0);
-      glVertex3f(-1, 0, -1);
-      glVertex3f(0, 1, -1);
-    glEnd();
+    
     // Back Trianlge
     glNormal3f(0,0,-1);
     glBegin(GL_TRIANGLE_STRIP);
@@ -47,14 +40,24 @@ void drawOne(){
       glVertex3f(0, 1, -1);
       glVertex3f(0, 0, -1);
     glEnd();
+    
     // Side
     glNormal3f(1,0,0);
     glBegin(GL_TRIANGLE_STRIP);
-      glVertex3f(-1, 0, -1);
+      //glVertex3f(-1, 0, -1);
       glVertex3f(0, 0, -1);
       glVertex3f(0, 1, 0);
       glVertex3f(0, 0, 0);
     glEnd();
+
+    glBegin(GL_TRIANGLE_STRIP);
+      //glVertex3f(-1, 0, -1);
+      glVertex3f(0, 0, -1);
+      glVertex3f(0, 1, 0);
+      glVertex3f(0, 1, -1);
+    glEnd();
+
+    
     // Bottom
     glNormal3f(0,0,0);
     glBegin(GL_TRIANGLE_STRIP);
@@ -63,6 +66,23 @@ void drawOne(){
       glVertex3f(-1, 0, -1);
       glVertex3f(-1, 0, 0);
     glEnd();
+
+    // Top
+    glNormal3f(-1,1,0);
+    glBegin(GL_TRIANGLE_STRIP);
+      glVertex3f(0,1,0);
+      glVertex3f(-1, 0, 0);
+      glVertex3f(-1, 0, -1);
+      //glVertex3f(0, 1, -1);
+    glEnd();
+
+    glBegin(GL_TRIANGLE_STRIP);
+      glVertex3f(0,1,0);
+      glVertex3f(-1, 0, -1);
+      glVertex3f(0, 1, -1);
+      //glVertex3f(0, 1, -1);
+    glEnd();
+    
   glPopMatrix();
 }
 void drawTwo(){

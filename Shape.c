@@ -25,7 +25,6 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
   
   glMaterialfv(GL_FRONT, GL_DIFFUSE, eavesColor);
   glPushMatrix();
-    //glColor3f(color1, color2, color3);
     glPushMatrix();
       glScalef(0.1,0.1, 1);
       glTranslatef(11, 11, 0);
