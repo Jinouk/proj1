@@ -48,7 +48,7 @@ void display(void) {
   gluPerspective( 60, w / h, 0.1, 100 );
 
 
-  GLfloat diffuse[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat diffuse[] = {0.7, 0.7, 0.7, 1.0};
   GLfloat ambient[] = {0.5, 0.5, 0.5, 1.0};
   GLfloat specular[] = {0.5, 0.5, 0.5, 1.0};
   GLfloat shininess[] = {5.0};
@@ -185,7 +185,8 @@ void display(void) {
     drawPolygon('h', 1.5, 3);
   glPopMatrix();
 
-  GLfloat numbers[] = {0.75, 0.75, 0.75 ,1};
+  GLfloat numbers[] = {0.7, 0.7, 0.7 ,1};
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, numbers);
   glPushMatrix();
     glTranslatef(-3, 2.5, 2);
     glScalef(0.25, 0.25, 0.25);

@@ -267,7 +267,6 @@ void drawTriangle(double radius, double height) {
       counter++;
     }
     
-    GLfloat normal[3];
     GLfloat p1[3], p2[3], p3[3];
 
     // Front Triangle
