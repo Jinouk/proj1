@@ -20,7 +20,7 @@ void drawCube(double color1, double color2, double color3, int num1, int num2, i
   glMaterialfv(GL_FRONT, GL_DIFFUSE, boxColor);
 
   glPushMatrix();
-    drawBox();
+    drawBoxWithTexture();
   glPopMatrix();
   
   glMaterialfv(GL_FRONT, GL_DIFFUSE, eavesColor);
@@ -408,10 +408,6 @@ void drawHexagon(double radius, double height) {
 }
 
 void drawCylinder(double radius, double height) {
-  
-  GLfloat ambient_and_diffuse[] = {1.0, 0.0, 0.0, 1.0};
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, ambient_and_diffuse);
-
   glPushMatrix();
     GLfloat vertices[361][2];
 

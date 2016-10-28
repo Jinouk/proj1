@@ -14,6 +14,7 @@
 #define PI 3.14159265
 
 void drawBox();
+void drawBoxWithTexture();
 void drawRingPart(double radiusX, double radiusY, double width, double thickness,  int start, int end);
 
 #endif
