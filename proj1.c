@@ -38,6 +38,11 @@ GLfloat texWidth = 256;
 GLfloat texHeight = 256;
 GLuint texid = 0;
 
+GLfloat angle = -150;   /* in degrees */
+GLfloat angle2 = 30;
+
+int moving, startx, starty;
+
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
   
@@ -71,196 +76,202 @@ void display(void) {
   glEnable(GL_LIGHT0);
   glEnable(GL_LIGHTING);
   
-  // Light box
   glPushMatrix();
-    glTranslatef(light_position[0], light_position[1], light_position[2]);
-    glScalef(0.25,0.25,0.25);
-    drawBox();
-  glPopMatrix();
-
-  // Floor 
-  GLfloat floorColor[] = {0.7, 0.7, 0.7, 1};
-  glPushMatrix();
-    //glColor3f(0.5, 0.5,0.5);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, floorColor);
-    glTranslatef(0, -2, 0);
-    glScalef(50,0.5, 50);
-    drawBox();
-  glPopMatrix();
-  
-  // Name
-  GLfloat nameColor[] = {0.3, 0.5, 0.1, 1.0};
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, nameColor);
-  glPushMatrix();
-    glTranslatef(-9, letterAnimate, -50);
-    drawLetter('J');
-  glPopMatrix();
-
-  glPushMatrix();
-    glTranslatef(-6, letterAnimate, -50);
-    drawLetter('I');
-  glPopMatrix();
-
-  glPushMatrix();
-    glTranslatef(-3, letterAnimate, -50);
-    drawLetter('N');
-  glPopMatrix();
-
-  glPushMatrix();
-    glTranslatef(0, letterAnimate, -50);
-    drawLetter('O');
-  glPopMatrix();
-
-  glPushMatrix();
-    glTranslatef(3, letterAnimate, -50);
-    drawLetter('U');
-  glPopMatrix();
-
-  glPushMatrix();
-    glTranslatef(6, letterAnimate, -50);
-    drawLetter('K');
-  glPopMatrix();
-
-  // Yellow
-  glPushMatrix();
-    glTranslatef(2, 0, -3);
-    glRotatef(-40, 0, 1, 0);
-    glRotatef(90, 0, 0, 1);
-    glRotatef(leftRotateSlow, 1, 0, 0);
-    drawCube(0.8, 0.5, 0, 3, 7, 't', 'h', 'P', 'Z');
-  glPopMatrix();
-
-  // Wood box
-  GLfloat wb[] = {1.0, 1.0, 1.0, 1.0};
-  glPushMatrix();
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, wb);
-    glTranslatef(0, 0, -10);
-    glScalef(6, 0.5, 4);
-    drawBoxWithTexture();
-  glPopMatrix();
-
-  // Green
-  glPushMatrix();
-    glTranslatef(-3, 1.75, -10);
-    glRotatef(rightRotatefast, 0, 1, 0);
-    drawCube(0.0, 0.7, 0.0, 2, 0, 'c', 'h', 'K', 'D');
-  glPopMatrix();
-
-  // Red
-  glPushMatrix();
-    glTranslatef(3, 1.75, -9);
-    glRotatef(leftRotateSlow, 0, 1, 0);
-    drawCube(1, 0, 0, 1, 4, 't', 'c', 'W', 'X');
-  glPopMatrix();
-
-  // Blue
-  glPushMatrix();
-    glTranslatef(5, 0, 2);
-    glScalef(0.75, 0.75, 0.75);
-    glRotatef(rightRotatefast, 0, 1, 0);
-    drawCube(0.0, 0.0, 0.24, 8, 4, 'h', 'c', 'F', 'A');
-  glPopMatrix();
-
-  // Purple
-  glPushMatrix();
-    glTranslatef(5, 1.5, 2);
-    glRotatef(leftRotateSlow, 0, 1, 0);
-    glScalef(0.5,0.5,0.5);
-    drawCube(0.5, 0.0, 0.4, 5, 9, 'h', 'c', 'U', 'Y');
-  glPopMatrix();
-
-  GLfloat cylinder[] = {0.5, 0.2, 0.9, 1};
-  glPushMatrix();
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, cylinder);
-    glTranslatef(-3, 0, 2);
-    glRotatef(90, 1, 0, 0);
-    drawPolygon('c', 3, 3);
-  glPopMatrix();
-
-  GLfloat hexagon[] = {0.8, 0.5, 0.8, 1};
-  glPushMatrix();
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, hexagon);
-    glTranslatef(-3 ,1.50, 2);
-    glRotatef(90, 1, 0, 0);
-    drawPolygon('h', 1.5, 3);
-  glPopMatrix();
-
-  GLfloat numbers[] = {0.7, 0.7, 0.7 ,1};
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, numbers);
-  glPushMatrix();
-    glTranslatef(-3, 2.5, 2);
-    glScalef(0.25, 0.25, 0.25);
-
+    glRotatef(angle2, 1.0, 0.0, 0.0);
+    glRotatef(angle, 0.0, 1.0, 0.0);
+    // Light box
     glPushMatrix();
-      glTranslatef(10* cos(degree * (0 + numDegreeDelta)), 0, 10 * sin(degree * (0 + numDegreeDelta)));
-      glRotatef(rightRotatefast, 0, 1, 0);
-      drawNumber(0); 
+      glTranslatef(light_position[0], light_position[1], light_position[2]);
+      glScalef(0.25,0.25,0.25);
+      drawBox();
     glPopMatrix();
 
+    // Floor 
+    GLfloat floorColor[] = {0.7, 0.7, 0.7, 1};
     glPushMatrix();
-      glTranslatef(10* cos(degree * (1 + numDegreeDelta)), 0, 10 * sin(degree * (1 + numDegreeDelta)));
-      drawNumber(1);
+      glMaterialfv(GL_FRONT, GL_DIFFUSE, floorColor);
+      glTranslatef(0, -2, 0);
+      glScalef(50,0.5, 50);
+      drawBox();
     glPopMatrix();
-
-    glPushMatrix();
-      glTranslatef(10* cos(degree * (2 + numDegreeDelta)), 0, 10 * sin(degree * (2 + numDegreeDelta)));
-      glRotatef(leftRotateFast, 0, 1, 0);
-      drawNumber(2);
-    glPopMatrix();
-
-    glPushMatrix();
-      glTranslatef(10* cos(degree * (3 + numDegreeDelta)), 0, 10 * sin(degree * (3 + numDegreeDelta)));
-      drawNumber(3);
-    glPopMatrix();
-
-    glPushMatrix();
-      glTranslatef(10* cos(degree * (4 + numDegreeDelta)), 0, 10 * sin(degree * (4 + numDegreeDelta)));
-      glRotatef(rightRotatefast, 0, 1, 0);
-      drawNumber(4);
-    glPopMatrix();
-
-    glPushMatrix();
-      glTranslatef(10* cos(degree * (5 + numDegreeDelta)), 0, 10 * sin(degree * (5 + numDegreeDelta)));
-      drawNumber(5);
-    glPopMatrix();
-
-    glPushMatrix();
-      glTranslatef(10* cos(degree * (6 + numDegreeDelta)), 0, 10 * sin(degree * (6 + numDegreeDelta)));
-      glRotatef(leftRotateFast, 0, 1, 0);
-      drawNumber(6);
-    glPopMatrix();
-
-    glPushMatrix();
-      glTranslatef(10* cos(degree * (7 + numDegreeDelta)), 0, 10 * sin(degree * (7 + numDegreeDelta)));
-      drawNumber(7);
-    glPopMatrix();
-
-    glPushMatrix();
-      glTranslatef(10* cos(degree * (8 + numDegreeDelta)), 0, 10 * sin(degree * (8 + numDegreeDelta)));
-      glRotatef(rightRotatefast, 0, 1, 0);
-      drawNumber(8);
-    glPopMatrix();
-
-    glPushMatrix();
-      glTranslatef(10* cos(degree * (9 + numDegreeDelta)), 0, 10 * sin(degree * (9 + numDegreeDelta)));
-      drawNumber(9);
-    glPopMatrix();
-
-  glPopMatrix();
-
-  // 10
-  glPushMatrix();
-    glTranslatef(-3, 3.75, 2);
-    glScalef(0.25, 0.25, 0.25);
     
+    // Name
+    GLfloat nameColor[] = {0.3, 0.5, 0.1, 1.0};
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, nameColor);
     glPushMatrix();
-      glTranslatef(-1.5, 0, 0);
-      drawNumber(1);
+      glTranslatef(-9, letterAnimate, -50);
+      drawLetter('J');
     glPopMatrix();
 
     glPushMatrix();
-      glTranslatef(1.5, 0, 0);
-      drawNumber(0);
+      glTranslatef(-6, letterAnimate, -50);
+      drawLetter('I');
+    glPopMatrix();
+
+    glPushMatrix();
+      glTranslatef(-3, letterAnimate, -50);
+      drawLetter('N');
+    glPopMatrix();
+
+    glPushMatrix();
+      glTranslatef(0, letterAnimate, -50);
+      drawLetter('O');
+    glPopMatrix();
+
+    glPushMatrix();
+      glTranslatef(3, letterAnimate, -50);
+      drawLetter('U');
+    glPopMatrix();
+
+    glPushMatrix();
+      glTranslatef(6, letterAnimate, -50);
+      drawLetter('K');
+    glPopMatrix();
+
+    // Yellow
+    glPushMatrix();
+      glTranslatef(2, 0, -3);
+      glRotatef(-40, 0, 1, 0);
+      glRotatef(90, 0, 0, 1);
+      glRotatef(leftRotateSlow, 1, 0, 0);
+      drawCube(0.8, 0.5, 0, 3, 7, 't', 'h', 'P', 'Z');
+    glPopMatrix();
+
+    // Wood box
+    GLfloat wb[] = {1.0, 1.0, 1.0, 1.0};
+    glPushMatrix();
+      glMaterialfv(GL_FRONT, GL_DIFFUSE, wb);
+      glTranslatef(0, 0, -10);
+      glScalef(6, 0.5, 4);
+      drawBoxWithTexture();
+    glPopMatrix();
+
+    // Green
+    glPushMatrix();
+      glTranslatef(-3, 1.75, -10);
+      glRotatef(rightRotatefast, 0, 1, 0);
+      drawCube(0.0, 0.7, 0.0, 2, 0, 'c', 'h', 'K', 'D');
+    glPopMatrix();
+
+    // Red
+    glPushMatrix();
+      glTranslatef(3, 1.75, -9);
+      glRotatef(leftRotateSlow, 0, 1, 0);
+      drawCube(1, 0, 0, 1, 4, 't', 'c', 'W', 'X');
+    glPopMatrix();
+
+    // Blue
+    glPushMatrix();
+      glTranslatef(5, 0, 2);
+      glScalef(0.75, 0.75, 0.75);
+      glRotatef(rightRotatefast, 0, 1, 0);
+      drawCube(0.0, 0.0, 0.24, 8, 4, 'h', 'c', 'F', 'A');
+    glPopMatrix();
+
+    // Purple
+    glPushMatrix();
+      glTranslatef(5, 1.5, 2);
+      glRotatef(leftRotateSlow, 0, 1, 0);
+      glScalef(0.5,0.5,0.5);
+      drawCube(0.5, 0.0, 0.4, 5, 9, 'h', 'c', 'U', 'Y');
+    glPopMatrix();
+
+    // Cylinder
+    GLfloat cylinder[] = {0.5, 0.2, 0.9, 1};
+    glPushMatrix();
+      glMaterialfv(GL_FRONT, GL_DIFFUSE, cylinder);
+      glTranslatef(-3, 0, 2);
+      glRotatef(90, 1, 0, 0);
+      drawPolygon('c', 3, 3);
+    glPopMatrix();
+
+    // Hexagon
+    GLfloat hexagon[] = {0.8, 0.5, 0.8, 1};
+    glPushMatrix();
+      glMaterialfv(GL_FRONT, GL_DIFFUSE, hexagon);
+      glTranslatef(-3 ,1.50, 2);
+      glRotatef(90, 1, 0, 0);
+      drawPolygon('h', 1.5, 3);
+    glPopMatrix();
+
+    //Numbers
+    GLfloat numbers[] = {0.7, 0.7, 0.7 ,1};
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, numbers);
+    glPushMatrix();
+      glTranslatef(-3, 2.5, 2);
+      glScalef(0.25, 0.25, 0.25);
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (0 + numDegreeDelta)), 0, 10 * sin(degree * (0 + numDegreeDelta)));
+        glRotatef(rightRotatefast, 0, 1, 0);
+        drawNumber(0); 
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (1 + numDegreeDelta)), 0, 10 * sin(degree * (1 + numDegreeDelta)));
+        drawNumber(1);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (2 + numDegreeDelta)), 0, 10 * sin(degree * (2 + numDegreeDelta)));
+        glRotatef(leftRotateFast, 0, 1, 0);
+        drawNumber(2);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (3 + numDegreeDelta)), 0, 10 * sin(degree * (3 + numDegreeDelta)));
+        drawNumber(3);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (4 + numDegreeDelta)), 0, 10 * sin(degree * (4 + numDegreeDelta)));
+        glRotatef(rightRotatefast, 0, 1, 0);
+        drawNumber(4);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (5 + numDegreeDelta)), 0, 10 * sin(degree * (5 + numDegreeDelta)));
+        drawNumber(5);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (6 + numDegreeDelta)), 0, 10 * sin(degree * (6 + numDegreeDelta)));
+        glRotatef(leftRotateFast, 0, 1, 0);
+        drawNumber(6);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (7 + numDegreeDelta)), 0, 10 * sin(degree * (7 + numDegreeDelta)));
+        drawNumber(7);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (8 + numDegreeDelta)), 0, 10 * sin(degree * (8 + numDegreeDelta)));
+        glRotatef(rightRotatefast, 0, 1, 0);
+        drawNumber(8);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(10* cos(degree * (9 + numDegreeDelta)), 0, 10 * sin(degree * (9 + numDegreeDelta)));
+        drawNumber(9);
+      glPopMatrix();
+
+    glPopMatrix();
+
+    // 10
+    glPushMatrix();
+      glTranslatef(-3, 3.75, 2);
+      glScalef(0.25, 0.25, 0.25);
+      
+      glPushMatrix();
+        glTranslatef(-1.5, 0, 0);
+        drawNumber(1);
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(1.5, 0, 0);
+        drawNumber(0);
+      glPopMatrix();
     glPopMatrix();
   glPopMatrix();
 
@@ -426,17 +437,41 @@ void specialKey(int key, int x, int y) {
     glutPostRedisplay();
 }
 
+void mouse(int button, int state, int x, int y) {
+  if (button == GLUT_LEFT_BUTTON) {
+    if (state == GLUT_DOWN) {
+      moving = 1;
+      startx = x;
+      starty = y;
+    }
+    if (state == GLUT_UP) {
+      moving = 0;
+    }
+  }
+}
+
+void motion(int x, int y) {
+  if (moving) {
+    angle = angle + (x - startx);
+    angle2 = angle2 + (y - starty);
+    startx = x;
+    starty = y;
+    glutPostRedisplay();
+  }
+}
 int main(int argc, char **argv) {
 
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
   glutInitWindowSize(800, 800);
-  glutCreateWindow("HW1");
+  glutCreateWindow("HW2");
   glutInitWindowPosition(50, 50);
   
   init();
   glutDisplayFunc(display);
   //glutReshapeFunc(changeSize);
+  glutMouseFunc(mouse);
+  glutMotionFunc(motion);
   glutIdleFunc(display);
   glutKeyboardFunc(keyboard);
   glutSpecialUpFunc(specialKey);
