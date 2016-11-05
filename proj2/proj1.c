@@ -46,46 +46,18 @@ int moving, startx, starty;
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
   
-  glMatrixMode( GL_PROJECTION );
-  glLoadIdentity();
-  int w = glutGet( GLUT_WINDOW_WIDTH );
-  int h = glutGet( GLUT_WINDOW_HEIGHT );
-  gluPerspective( 60, w / h, 0.1, 100 );
-
-
-  GLfloat diffuse[] = {0.7, 0.7, 0.7, 1.0};
-  GLfloat ambient[] = {0.5, 0.5, 0.5, 1.0};
-  GLfloat specular[] = {0.5, 0.5, 0.5, 1.0};
-  GLfloat shininess[] = {5.0};
-  //GLfloat light_position[] = {2.0, 2.0, 2.0, 0.0};
-
-  light_position[0] = 20*cos(lightAngle);
-  light_position[1] = lightHeight;
-  light_position[2] = 20*sin(lightAngle);
-
-
-  glMatrixMode( GL_MODELVIEW );
-  glLoadIdentity();
-  gluLookAt(cameraRadius * sin(theta) * sin(phi), cameraRadius * cos(phi), cameraRadius * cos(theta) * sin(phi), 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f);
+  // Light box
+  glPushMatrix();
+    glTranslatef(light_position[0], light_position[1], light_position[2]);
+    glScalef(0.25,0.25,0.25);
+    drawBox();
+  glPopMatrix();
   
-  glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-  //glLightfv(GL_LIGHT0, GL_SHININESS, shininess);
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-  glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-  glEnable(GL_LIGHT0);
-  glEnable(GL_LIGHTING);
-  
+  // Push all objects to be able to rotate all at once
   glPushMatrix();
     glRotatef(angle2, 1.0, 0.0, 0.0);
-    glRotatef(angle, 0.0, 1.0, 0.0);
-    // Light box
-    glPushMatrix();
-      glTranslatef(light_position[0], light_position[1], light_position[2]);
-      glScalef(0.25,0.25,0.25);
-      drawBox();
-    glPopMatrix();
-
+    glRotatef(angle, 0.0, 1.0, 0.0);  
+    
     // Floor 
     GLfloat floorColor[] = {0.7, 0.7, 0.7, 1};
     glPushMatrix();
@@ -312,6 +284,34 @@ void display(void) {
 
 void init(void) {
   glClearColor(1.0, 1.0, 1.0, 1.0);
+
+  glMatrixMode( GL_PROJECTION );
+  glLoadIdentity();
+  int w = glutGet( GLUT_WINDOW_WIDTH );
+  int h = glutGet( GLUT_WINDOW_HEIGHT );
+  gluPerspective( 60, w / h, 0.1, 100 );
+  
+  GLfloat diffuse[] = {0.7, 0.7, 0.7, 1.0};
+  GLfloat ambient[] = {0.5, 0.5, 0.5, 1.0};
+  GLfloat specular[] = {0.5, 0.5, 0.5, 1.0};
+  GLfloat shininess[] = {5.0};
+
+  light_position[0] = 20*cos(lightAngle);
+  light_position[1] = lightHeight;
+  light_position[2] = 20*sin(lightAngle);
+
+  glMatrixMode( GL_MODELVIEW );
+  glLoadIdentity();
+  gluLookAt(cameraRadius * sin(theta) * sin(phi), cameraRadius * cos(phi), cameraRadius * cos(theta) * sin(phi), 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f);
+  
+  glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+  glLightfv(GL_LIGHT0, GL_SHININESS, shininess);
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+  glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_LIGHTING);
+  
   glShadeModel(GL_SMOOTH);
   glEnable(GL_DEPTH_TEST);
 }
@@ -387,7 +387,7 @@ void changeSize(int w, int h) {
   glViewport(0, 0, w, h);
 
   // Set the correct perspective.
-  gluPerspective(45.0f, ratio, 0.1f, 100.0f);
+  gluPerspective(60.0f, ratio, 0.1f, 100.0f);
 
   // Get Back to the Modelview
   glMatrixMode(GL_MODELVIEW);
@@ -469,7 +469,7 @@ int main(int argc, char **argv) {
   
   init();
   glutDisplayFunc(display);
-  //glutReshapeFunc(changeSize);
+  glutReshapeFunc(changeSize);
   glutMouseFunc(mouse);
   glutMotionFunc(motion);
   glutIdleFunc(display);
